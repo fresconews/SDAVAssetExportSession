@@ -23,7 +23,7 @@
  * limited set of Apple provided presets.
  *
  * After you have initialized an export session with the asset that contains the source media, video and audio
- * settings, and the output file type (outputFileType), you can start the export running by invoking 
+ * settings, and the output file type (outputFileType), you can start the export running by invoking
  * `exportAsynchronouslyWithCompletionHandler:`. Because the export is performed asynchronously, this method
  * returns immediately — you can observe progress to check on the progress.
  *
@@ -144,6 +144,9 @@
  */
 @property (nonatomic, assign, readonly) AVAssetExportSessionStatus status;
 
+
+@property (nonatomic, strong) NSString *postID;
+
 /**
  * Returns an asset export session configured with a specified asset.
  *
@@ -184,11 +187,14 @@
  */
 - (void)cancelExport;
 
+
 @end
 
 
 @protocol SDAVAssetExportSessionDelegate <NSObject>
 
 - (void)exportSession:(SDAVAssetExportSession *)exportSession renderFrame:(CVPixelBufferRef)pixelBuffer withPresentationTime:(CMTime)presentationTime toBuffer:(CVPixelBufferRef)renderBuffer;
+
+- (void)updateTranscodingProgress:(float)progress withPostID:(NSString *)postID;
 
 @end
